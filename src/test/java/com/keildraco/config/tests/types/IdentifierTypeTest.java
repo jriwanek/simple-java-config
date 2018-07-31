@@ -3,11 +3,11 @@
  */
 package com.keildraco.config.tests.types;
 
-import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
-import org.junit.jupiter.api.TestInstance.Lifecycle;
+import static org.junit.Assert.*;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 import com.keildraco.config.types.IdentifierType;
 import com.keildraco.config.types.ParserInternalTypeBase;
@@ -16,15 +16,21 @@ import com.keildraco.config.types.ParserInternalTypeBase;
  * @author Daniel Hazelton
  *
  */
-@TestInstance(Lifecycle.PER_CLASS)
 public class IdentifierTypeTest {
 	private IdentifierType testItem;
 	/**
 	 * @throws java.lang.Exception
 	 */
-	@BeforeAll
+	@Before
 	public void setUp() throws Exception {
 		this.testItem = new IdentifierType("key", "value");
+	}
+
+	/**
+	 * @throws java.lang.Exception
+	 */
+	@After
+	public void tearDown() throws Exception {
 	}
 
 	/**
@@ -40,7 +46,7 @@ public class IdentifierTypeTest {
 	 */
 	@Test
 	public final void testHas() {
-		assertFalse(this.testItem.has("test"));
+		assertEquals(false, this.testItem.has("test"));
 	}
 
 	/**
@@ -67,7 +73,7 @@ public class IdentifierTypeTest {
 	public final void testAddItem() {
 		try {
 			this.testItem.addItem(ParserInternalTypeBase.EmptyType);
-			assertTrue(true, "Expected no exception");
+			assertTrue("Expected no exception", true);
 		} catch(Exception e) {
 			fail("Exception ("+e.getMessage()+" :: "+e+") caught when not expected");
 		}

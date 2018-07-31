@@ -1,16 +1,15 @@
 package com.keildraco.config.tests.data;
 
-import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
-import org.junit.jupiter.api.TestInstance.Lifecycle;
+import static org.junit.Assert.*;
 
 import java.io.InputStreamReader;
 import java.io.StreamTokenizer;
 import java.nio.charset.StandardCharsets;
 
 import org.apache.commons.io.IOUtils;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 import com.keildraco.config.Config;
 import com.keildraco.config.data.ItemMatcher;
@@ -20,11 +19,10 @@ import com.keildraco.config.types.ParserInternalTypeBase;
 import com.keildraco.config.types.SectionType;
 import com.keildraco.config.types.ParserInternalTypeBase.ItemType;
 
-@TestInstance(Lifecycle.PER_CLASS)
 public class ItemMatcherTest {
 	private ParserInternalTypeBase base;
 	
-	@BeforeAll
+	@Before
 	public void setUp() throws Exception {
 		Config.registerKnownParts();
 		String testString = "section {\nlist = [ alpha, bravo(!charlie), delta]\necho {\nfoxtrot = golf\n}\n}\n\n";
@@ -38,6 +36,10 @@ public class ItemMatcherTest {
 		this.base = Config.getFactory().parseTokens("SECTION", null, t, null);
 	}
 
+	@After
+	public void tearDown() throws Exception {
+	}
+
 	@Test
 	public final void testItemMatcher() {
 		try {
@@ -48,14 +50,14 @@ public class ItemMatcherTest {
 		} catch(Exception e) {
 			fail("Caught exception instantiating an ItemMatcher: "+e);
 		}
-		assertTrue(true, "No exceptions instantiating an ItemMatcher");
+		assertTrue("No exceptions instantiating an ItemMatcher", true);
 	}
 
 	@Test
 	public final void testMatches() {
 		try {
 			ItemMatcher m = new ItemMatcher(new IdentifierType("ident"));
-			assertTrue(m.matches("ident"), "ItemMatcher returns true");
+			assertTrue("ItemMatcher returns true", m.matches("ident"));
 		} catch(Exception e) {
 			fail("Caught exception instantiating an ItemMatcher: "+e);
 		}
@@ -64,13 +66,13 @@ public class ItemMatcherTest {
 	@Test
 	public final void testMatchList() {
 		ItemMatcher m = new ItemMatcher(this.base.get("section.list"));
-		assertTrue(m.matches("alpha"), "list matches 'alpha'");
+		assertTrue("list matches 'alpha'", m.matches("alpha"));
 	}
 
 	@Test
 	public final void testMatchIdentifier() {
 		ItemMatcher m = new ItemMatcher(this.base.get("section.echo.foxtrot"));
-		assertTrue(m.matches("golf"), "Identifer \"foxtrot\" matches 'golf'");
+		assertTrue("Identifer \"foxtrot\" matches 'golf'", m.matches("golf"));
 	}
 	
 	private final boolean noMatch(ItemMatcher m, String key) {
@@ -80,13 +82,13 @@ public class ItemMatcherTest {
 	@Test
 	public final void testMatchOperation() {
 		ItemMatcher m = new ItemMatcher(this.base.get("section.list"));
-		assertAll("Operation matches bravo.hotel but not bravo.charlie", () -> m.matches("bravo.hotel"), () -> noMatch(m, "bravo.charlie"));
+		assertTrue("Operation matches bravo.hotel but not bravo.charlie", m.matches("bravo.hotel")&&noMatch(m, "bravo.charlie"));
 	}
 	
 	@Test
 	public final void testMatchSection() {
 		ItemMatcher m = new ItemMatcher(this.base.get("section"));
-		assertAll("Section matches \"list\" and \"echo\"", () -> m.matches("list"),() -> m.matches("echo"));
+		assertTrue("Section matches \"list\" and \"echo\"", m.matches("list")&&m.matches("echo"));
 	}
 	
 	@Test

@@ -1,10 +1,6 @@
 package com.keildraco.config.tests.states;
 
-import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
-import org.junit.jupiter.api.TestInstance.Lifecycle;
+import static org.junit.Assert.*;
 
 import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.mock;
@@ -18,17 +14,19 @@ import java.io.StreamTokenizer;
 import java.nio.charset.StandardCharsets;
 
 import org.apache.commons.io.IOUtils;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 import com.keildraco.config.factory.TypeFactory;
 import com.keildraco.config.states.*;
 import com.keildraco.config.types.*;
 import static com.keildraco.config.types.ParserInternalTypeBase.ItemType;
 
-@TestInstance(Lifecycle.PER_CLASS)
 public class ListParserTest {
 	private TypeFactory factory;
 	
-	@BeforeAll
+	@Before
 	public void setUp() throws Exception {
 		this.factory = new TypeFactory();
 		this.factory.registerParser(() -> {
@@ -59,12 +57,16 @@ public class ListParserTest {
 		this.factory.registerType((parent, name, value) -> new SectionType(parent, name, value), ItemType.SECTION);
 	}
 
+	@After
+	public void tearDown() throws Exception {
+	}
+
 	@Test
 	public final void testListParser() {
 		try {
 			@SuppressWarnings("unused")
 			ListParser p = new ListParser(this.factory, "LIST");
-			assertTrue(true, "Expected to not get an exception");
+			assertTrue("Expected to not get an exception", true);
 		} catch( Exception e ) {
 			fail("Caught exception instanting a new KeyValueParser: "+e.getMessage());
 		}
@@ -75,7 +77,7 @@ public class ListParserTest {
 		try {
 			ListParser p = new ListParser(this.factory, "LIST");
 			p.setErrored();
-			assertTrue(true, "Expected to not get an exception");
+			assertTrue("Expected to not get an exception", true);
 		} catch( Exception e ) {
 			fail("Caught exception instanting a new KeyValueParser: "+e.getMessage());
 		}
@@ -85,7 +87,7 @@ public class ListParserTest {
 	public final void testErrored() {
 		try {
 			ListParser p = new ListParser(this.factory, "LIST");
-			assertTrue(p.errored()==false, "Expected new parser instance to return false from the errored() method");
+			assertTrue("Expected new parser instance to return false from the errored() method", p.errored()==false);
 		} catch( Exception e ) {
 			fail("Caught exception instanting a new KeyValueParser: "+e.getMessage());
 		}
@@ -110,7 +112,7 @@ public class ListParserTest {
 		try {
 			ListParser p = new ListParser(this.factory, "LIST");
 			p.setParent(ParserInternalTypeBase.EmptyType);
-			assertTrue(true, "Expected setParent() to not have an exception");
+			assertTrue("Expected setParent() to not have an exception", true);
 		} catch( Exception e ) {
 			fail("Caught exception instanting a new KeyValueParser: "+e.getMessage());
 		}
@@ -119,7 +121,7 @@ public class ListParserTest {
 	@Test
 	public final void testGetParent() {
 		ListParser p = new ListParser(this.factory, "LIST");
-		assertNull(p.getParent(), "Expected getParent() on a fresh parser to be null");
+		assertTrue("Expected getParent() on a fresh parser to be null", p.getParent()==null);
 	}
 
 }

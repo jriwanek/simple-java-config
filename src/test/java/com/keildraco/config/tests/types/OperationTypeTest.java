@@ -1,10 +1,10 @@
 package com.keildraco.config.tests.types;
 
-import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
-import org.junit.jupiter.api.TestInstance.Lifecycle;
+import static org.junit.Assert.*;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 import com.keildraco.config.types.OperationType;
 import com.keildraco.config.types.ParserInternalTypeBase;
@@ -12,14 +12,17 @@ import com.keildraco.config.types.ParserInternalTypeBase;
 import static com.keildraco.config.types.ParserInternalTypeBase.EmptyType;
 import static com.keildraco.config.types.ParserInternalTypeBase.ItemType;
 
-@TestInstance(Lifecycle.PER_CLASS)
 public class OperationTypeTest {
 	private OperationType testItem;
 	
-	@BeforeAll
+	@Before
 	public void setUp() throws Exception {
 		this.testItem = new OperationType(EmptyType, "blargh", "foobar");
 		this.testItem.setOperation("!");
+	}
+
+	@After
+	public void tearDown() throws Exception {
 	}
 
 	@Test
@@ -27,7 +30,7 @@ public class OperationTypeTest {
 		try {
 			@SuppressWarnings("unused")
 			OperationType op = new OperationType("OPERATION");
-			assertTrue(true, "Expected no exception");
+			assertTrue("Expected no exception", true);
 		} catch(Exception e) {
 			fail("Caught exception instantiating new OperationType");
 		}
@@ -38,7 +41,7 @@ public class OperationTypeTest {
 		try {
 			@SuppressWarnings("unused")
 			OperationType op = new OperationType(ParserInternalTypeBase.EmptyType, "OPERATION");
-			assertTrue(true, "Expected no exception");
+			assertTrue("Expected no exception", true);
 		} catch(Exception e) {
 			fail("Caught exception instantiating new OperationType");
 		}
@@ -58,7 +61,7 @@ public class OperationTypeTest {
 	public final void testSetOperation() {
 		try {
 			this.testItem.setOperation("!");
-			assertTrue(true, "Expected no exception");
+			assertTrue("Expected no exception", true);
 		} catch(Exception e) {
 			fail("Exception ("+e.getMessage()+" :: "+e+") caught when not expected");
 		}

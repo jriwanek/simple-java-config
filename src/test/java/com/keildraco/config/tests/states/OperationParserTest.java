@@ -1,10 +1,6 @@
 package com.keildraco.config.tests.states;
 
-import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
-import org.junit.jupiter.api.TestInstance.Lifecycle;
+import static org.junit.Assert.*;
 
 import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.mock;
@@ -18,18 +14,19 @@ import java.io.StreamTokenizer;
 import java.nio.charset.StandardCharsets;
 
 import org.apache.commons.io.IOUtils;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 import com.keildraco.config.factory.TypeFactory;
 import com.keildraco.config.states.*;
 import com.keildraco.config.types.*;
 import static com.keildraco.config.types.ParserInternalTypeBase.ItemType;
 
-
-@TestInstance(Lifecycle.PER_CLASS)
 public class OperationParserTest {
 	private TypeFactory factory;
 	
-	@BeforeAll
+	@Before
 	public void setUp() throws Exception {
 		this.factory = new TypeFactory();
 		this.factory.registerParser(() -> {
@@ -103,12 +100,16 @@ public class OperationParserTest {
 		this.factory.registerType((parent, name, value) -> new SectionType(parent, name, value), ItemType.SECTION);
 	}
 
+	@After
+	public void tearDown() throws Exception {
+	}
+
 	@Test
 	public final void testOperationParserTypeFactory() {
 		try {
 			@SuppressWarnings("unused")
 			OperationParser p = new OperationParser(this.factory);
-			assertTrue(true, "Expected no exception");
+			assertTrue("Expected no exception", true);
 		} catch( Exception e ) {
 			fail("Caught exception instanting a new KeyValueParser: "+e.getMessage());
 		}		
@@ -119,7 +120,7 @@ public class OperationParserTest {
 		try {
 			@SuppressWarnings("unused")
 			OperationParser p = new OperationParser(this.factory, null, "BUGGER");
-			assertTrue(true, "Expected no exception");
+			assertTrue("Expected no exception", true);
 		} catch( Exception e ) {
 			fail("Caught exception instanting a new KeyValueParser: "+e.getMessage());
 		}		
@@ -130,7 +131,7 @@ public class OperationParserTest {
 		try {
 			OperationParser p = new OperationParser(this.factory);
 			p.setFactory(this.factory);
-			assertTrue(true, "Expected no exception");
+			assertTrue("Expected no exception", true);
 		} catch( Exception e ) {
 			fail("Caught exception using a parsers setFactory(TypeFactory) method: "+e.getMessage());
 		}		
@@ -152,7 +153,7 @@ public class OperationParserTest {
 		try {
 			OperationParser p = new OperationParser(this.factory);
 			p.setErrored();
-			assertTrue(true, "Expected no exception");
+			assertTrue("Expected no exception", true);
 		} catch( Exception e ) {
 			fail("Caught exception calling a parsers setErrored() method: "+e.getMessage());
 		}		
@@ -187,7 +188,7 @@ public class OperationParserTest {
 		try {
 			OperationParser p = new OperationParser(this.factory);
 			p.setParent(ParserInternalTypeBase.EmptyType);
-			assertTrue(true, "Expected no exception");
+			assertTrue("Expected no exception", true);
 		} catch( Exception e ) {
 			fail("Caught exception calling a parsers setParent() method: "+e.getMessage());
 		}		
@@ -218,7 +219,7 @@ public class OperationParserTest {
 		try {
 			OperationParser p = new OperationParser(this.factory);
 			p.clearErrors();
-			assertTrue(true, "Expected no exception");
+			assertTrue("Expected no exception", true);
 		} catch( Exception e ) {
 			fail("Caught exception telling a parser to clear its errors: "+e.getMessage());
 		}		

@@ -1,13 +1,15 @@
 package com.keildraco.config.tests.factory;
 
-import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.Test;
+import static org.junit.Assert.*;
 
 import java.io.InputStreamReader;
 import java.io.StreamTokenizer;
 import java.nio.charset.StandardCharsets;
 
 import org.apache.commons.io.IOUtils;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 import com.keildraco.config.factory.TypeFactory;
 import com.keildraco.config.states.*;
@@ -15,12 +17,20 @@ import com.keildraco.config.types.*;
 import com.keildraco.config.types.ParserInternalTypeBase.ItemType;
 
 public class TypeFactoryTest {
+	@Before
+	public void setUp() throws Exception {
+	}
+
+	@After
+	public void tearDown() throws Exception {
+	}
+
 	@Test
 	public final void testTypeFactory() {
 		try {
 			@SuppressWarnings("unused")
 			TypeFactory f = new TypeFactory();
-			assertTrue(true, "Expected no exception");
+			assertTrue("Expected no exception", true);
 		} catch(Exception e) {
 			fail("Caught exception "+e.getMessage()+" when trying to instantiate a TypeFactory");
 		}
@@ -31,7 +41,7 @@ public class TypeFactoryTest {
 		try {
 			TypeFactory f = new TypeFactory();
 			f.registerType((parent, name, value) -> new IdentifierType(parent, name, value), ItemType.BOOLEAN);
-			assertTrue(true, "Expected no exception");
+			assertTrue("Expected no exception", true);
 		} catch(Exception e) {
 			fail("Caught exception "+e.getMessage()+" when trying to instantiate a TypeFactory");
 		}
@@ -53,7 +63,7 @@ public class TypeFactoryTest {
 		try {
 			TypeFactory f = new TypeFactory();
 			f.registerParser(() -> new SectionParser(f,null,""), "SECTION");
-			assertTrue(true, "Expected no exception");
+			assertTrue("Expected no exception", true);
 		} catch(Exception e) {
 			fail("Caught exception "+e.getMessage()+" when trying to instantiate a TypeFactory");
 		}
@@ -65,7 +75,7 @@ public class TypeFactoryTest {
 			TypeFactory f = new TypeFactory();
 			f.registerParser(() -> new SectionParser(f,null,""), "SECTION");
 			IStateParser g = f.getParser("SECTION", null);
-			assertTrue(g != null, "Expected no exception");
+			assertTrue("Expected no exception", g != null);
 		} catch(Exception e) {
 			fail("Caught exception "+e.getMessage()+" when trying to instantiate a TypeFactory");
 		}
@@ -91,9 +101,9 @@ public class TypeFactoryTest {
 			t.slashSlashComments(true);
 			t.slashStarComments(true);
 			ParserInternalTypeBase z = f.parseTokens("SECTION", null, t, "ROOT");
-			assertAll("Expect result to have a \"section1\" containing a \"section2\" and an \"identifier\" and for \"section2\" to have \"ident2\"",
-					() -> z.has("section1"), () -> z.get("section1").has("section2"), 
-					() -> z.get("section1").has("identifier"), () -> z.get("section1").get("section2").has("ident2"));
+			assertTrue("Expect result to have a \"section1\" containing a \"section2\" and an \"identifier\" and for \"section2\" to have \"ident2\"",
+					z.has("section1") && z.get("section1").has("section2") && 
+					z.get("section1").has("identifier") && z.get("section1").get("section2").has("ident2"));
 		} catch(Exception e) {
 			fail("Caught exception "+e.getMessage()+" when trying to instantiate a TypeFactory");
 		}
