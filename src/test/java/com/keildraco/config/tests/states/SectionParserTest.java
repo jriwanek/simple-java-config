@@ -186,8 +186,6 @@ public class SectionParserTest {
 						&& k.get("section1").get("section2").has("ident2"));
 	}
 
-/*
-// TODO
 	@Test
 	public final void testGetStateUnexpectedStore() {
 		String testString = "section1 {\n= false\nidentifier = false\nsection2 {\nident2 = true\n}\n}\n\n";
@@ -199,12 +197,9 @@ public class SectionParserTest {
 		t.slashSlashComments(true);
 		t.slashStarComments(true);
 		ParserInternalTypeBase k = this.runParser(t);
-		assertEquals(ParserInternalTypeBase.EmptyType, k, "Expecting to have k be EmptyType");
+		assertEquals("Expecting to have k be EmptyType", ParserInternalTypeBase.EmptyType, k);
 	}
-*/
 	
-/*
-// TODO
 	@Test
 	public final void testGetStateUnexpectedItem() {
 		String testString = "section1 { identifier(";
@@ -216,9 +211,8 @@ public class SectionParserTest {
 		t.slashSlashComments(true);
 		t.slashStarComments(true);
 		ParserInternalTypeBase k = this.runParser(t);
-		assertEquals(ParserInternalTypeBase.EmptyType, k, "Expecting to have k be EmptyType");
+		assertEquals("Expecting to have k be EmptyType", ParserInternalTypeBase.EmptyType, k);
 	}
-*/
 	
 	@Test
 	public final void testSetParent() {
