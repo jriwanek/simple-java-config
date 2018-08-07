@@ -1,5 +1,6 @@
 package com.keildraco.config.types;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -50,7 +51,7 @@ public final class ListType extends ParserInternalTypeBase {
 	public ListType(@Nullable final ParserInternalTypeBase parent, final String name,
 			final List<ParserInternalTypeBase> values) {
 		super(parent, name);
-		this.value = new LinkedList<>();
+		this.value = new ArrayList<>();
 		values.stream().forEach(this.value::add);
 	}
 
@@ -61,7 +62,7 @@ public final class ListType extends ParserInternalTypeBase {
 	 */
 	public ListType(@Nullable final ParserInternalTypeBase parent, final String name) {
 		super(parent, name);
-		this.value = new LinkedList<>();
+		this.value = new ArrayList<>();
 	}
 
 	/**

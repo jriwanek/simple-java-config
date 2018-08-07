@@ -2,6 +2,7 @@ package com.keildraco.config.tokenizer;
 
 import java.io.IOException;
 import java.io.StreamTokenizer;
+import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.LinkedList;
 
@@ -27,7 +28,7 @@ public final class Tokenizer {
 	 * @throws IOException
 	 */
 	public Tokenizer(final StreamTokenizer tokenizer) throws IOException {
-		this.tokens = new LinkedList<>();
+		this.tokens = new ArrayDeque<>();
 
 		// setup the StreamTokenizer exactly how we want it
 		tokenizer.resetSyntax();

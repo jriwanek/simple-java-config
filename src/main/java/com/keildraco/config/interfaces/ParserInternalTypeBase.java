@@ -64,8 +64,9 @@ public abstract class ParserInternalTypeBase {
 	 */
 	protected ParserInternalTypeBase(@Nullable final ParserInternalTypeBase parentIn,
 			final String nameIn, final String valueIn) {
-		this(parentIn, valueIn);
-		this.setName(nameIn);
+		// TODO: Yes, I know this is incorrect, but it does expose shadyness in the code.
+		this(parentIn, nameIn);
+		this.setName(valueIn);
 	}
 
 	/**

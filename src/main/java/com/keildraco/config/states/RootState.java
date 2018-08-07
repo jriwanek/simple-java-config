@@ -1,5 +1,6 @@
 package com.keildraco.config.states;
 
+import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.Deque;
 import java.util.LinkedList;
@@ -48,7 +49,7 @@ public final class RootState extends AbstractParserBase {
 		Token current = tokenizer.peek();
 		Token next = tokenizer.peekToken();
 
-		final Deque<ParserInternalTypeBase> bits = new LinkedList<>();
+		final Deque<ParserInternalTypeBase> bits = new ArrayDeque<>();
 
 		while (tokenizer.hasNext()) {
 			try {
